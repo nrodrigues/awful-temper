@@ -1,0 +1,59 @@
+<!-- This is a static file -->
+<!-- served from your routes in server.js -->
+
+<!-- You might want to try something fancier: -->
+<!-- html/nunjucks docs: http://mozilla.github.io/nunjucks/ -->
+<!-- jade: http://jade-lang.com/ -->
+<!-- haml: http://haml.info/tutorial.html -->
+<!-- hbs(handlebars): http://handlebarsjs.com/expressions.html -->
+
+<!DOCTYPE html>
+<html ng-app='random-lunch-places' ng-cloak
+      ng-controller='placesCtrl'>
+  <head>
+    <title>LUNCH PLACE RANDOMIZER</title>
+    <meta name="description" content="A cool thing made with Gomix">
+    <link id="favicon" rel="icon" href="https://gomix.com/favicon-app.ico" type="image/x-icon">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="/style.css">
+  </head>
+  <body>
+    <header>
+      <h1>
+        Random Lunch Places
+      </h1>
+    </header>
+
+    <main>
+      <h2>Today's Lunch Will Be In:</h2>
+      <h3>{{ randomPlace }}</h3>
+      
+      <form name="placesForm" ng-submit="addLunchPlace()">
+        <p>Add a new lunch place:</p>
+        
+        <input type="text" maxlength="100" placeholder="Some fancy restaurant!" ng-model="newPlace">
+        <button type="submit">Submit</button>
+      </form>
+      <section class="lunch-places">
+        <p>Available places:</p>
+        <ul>
+          <li ng-repeat="place in lunchPlaces">
+            {{ place }}
+          </li>
+        </ul>
+      </section>
+    </main>
+
+    <footer>
+      Made with love by <a href="https://twitter.com/@NelsonJ_">@NelsonJ_</a>
+    </footer>
+
+    <!-- Your web-app is https, so your scripts need to be too -->
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.9/angular.min.js"
+            crossorigin="anonymous"></script>
+    <script src="/client.js"></script>
+
+  </body>
+</html>
