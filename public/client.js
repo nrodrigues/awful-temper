@@ -44,7 +44,8 @@ angular.module('random-lunch-places', [])
   }
   
   function deleteLunchPlace(lunchPlace) {
-    throw Error('not implemented');
+    return $http.delete('/lunch-places/' + lunchPlace)
+    .then(() => getAllLunchPlaces());
   }
  
 }])
@@ -53,6 +54,7 @@ angular.module('random-lunch-places', [])
   Object.assign($scope, {
     addLunchPlace,
     lunchPlaces: lunchPlaces.getAllLunchPlaces(),
+    deleteLunchPlace: lunchPlaces.deleteLunchPlace
   });
 
   lunchPlaces.getRandomLunchPlace()

@@ -41,6 +41,12 @@ app.post("/lunch-places", bodyParser.json(), function (request, response) {
   .catch((error) => response.status(500).send(error));
 });
 
+app.delete("/lunch-places/:place", function (request, response) {
+  redis.srem('lunchPlaces', request.params.place)
+  .then(() => response.sendStatus(200))
+  .catch((error) => response.status(500).send(error));
+});
+
 app.get('/lunch-places/random', function (request, response) {
   redis.srandmember('lunchPlaces')
   .then((randomPlace) => response.status(200).send({ randomPlace }))

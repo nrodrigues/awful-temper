@@ -40,7 +40,7 @@
         <p>Available places:</p>
         <ul>
           <li ng-repeat="place in lunchPlaces">
-            {{ place }}
+            {{ place }} - <button ng-click="deleteLunchPlace(place)">Remove</button>
           </li>
         </ul>
       </section>
