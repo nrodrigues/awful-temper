@@ -20,35 +20,64 @@
     <link rel="stylesheet" href="/style.css">
   </head>
   <body>
-    <header>
-      <h1>
-        Random Lunch Places
-      </h1>
-    </header>
-
-    <main>
-      <h2>Today's Lunch Will Be In:</h2>
-      <h3>{{ randomPlace }}</h3>
-      
-      <form name="placesForm" ng-submit="addLunchPlace()">
-        <p>Add a new lunch place:</p>
+    <div class="main-container">
+      <header>
+        <h1>
+          Random Lunch Places
+        </h1>
+      </header>
+  
+      <main>
+        <h2>
+          Today's Lunch Will Be In:
+          <strong class="todays-place">{{ todaysPlaceData.todaysPlace }}</strong>.
+        </h2>
+        <div ng-if="todaysPlaceData.voters.length">
+          {{votersMessage()}} don't like this idea!
+        </div>
+        <div>
+          <a href="" ng-click="voteDown.visible = !voteDown.visible">don't like it?</a>
+          <div ng-if="voteDown.visible">Reject votes only available throw slack on slack! Type "/london-lunch reject"</div>
+          <!-- <form ng-if="voteDown.visible"
+                name="form"
+                class="vote-down"
+                ng-submit="!form.$prestine && form.$valid && rejectTodaysPlace(user)">
+            <input type="text" ng-model="voteDown.user" required placeholder="slack username" />
+            <button type="submit" ng-disabled="form.$prestine || !form.$valid">Vote to Reject</button>
+            <div class="error-msg bold" ng-if="voteDown.error">{{voteDown.error.message}}</div>
+          </form> -->
+        </div>
         
-        <input type="text" maxlength="100" placeholder="Some fancy restaurant!" ng-model="newPlace">
-        <button type="submit">Submit</button>
-      </form>
-      <section class="lunch-places">
-        <p>Available places:</p>
-        <ul>
-          <li ng-repeat="place in lunchPlaces">
-            {{ place }} - <button ng-click="deleteLunchPlace(place)">Remove</button>
-          </li>
-        </ul>
-      </section>
-    </main>
-
-    <footer>
-      Made with love by <a href="https://twitter.com/@NelsonJ_">@NelsonJ_</a>
-    </footer>
+        <form name="placesForm" ng-submit="addLunchPlace()">
+          <p>Add a new lunch place:</p>
+          
+          <input type="text" maxlength="100" placeholder="Some fancy restaurant!" ng-model="newPlace">
+          <button type="submit">Submit</button>
+        </form>
+        <div class="split-screen">
+          <section class="lunch-places">
+            <p>Available places:</p>
+            <ul>
+              <li ng-repeat="place in lunchPlaces">
+                {{ place }} - <button ng-click="deleteLunchPlace(place)">Remove</button>
+              </li>
+            </ul>
+          </section>
+          <section class="lunch-places" ng-if="todaysPlaceData.rejected.length">
+            <p>Todays rejected places:</p>
+            <ul>
+              <li ng-repeat="place in todaysPlaceData.rejected">
+                {{ place }}
+              </li>
+            </ul>
+          </section>
+        </div>
+      </main>
+  
+      <footer>
+        <a href="https://gomix.com/#!/project/awful-temper">Edit this app</a>.
+      </footer>
+    </div>
 
     <!-- Your web-app is https, so your scripts need to be too -->
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.9/angular.min.js"

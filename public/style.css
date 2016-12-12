@@ -8,15 +8,38 @@
   box-sizing: border-box;
 }
 
+html,
 body {
+  padding: 0;
+  margin: 0;
   font-family: helvetica, arial, sans-serif;
-  margin: 25px;
-  text-align: center;
+  background-color: #EBEBEB;
+}
+
+.main-container {
+  margin: 25px auto;
+  width: 800px;
+  background-color: white;
+}
+
+header {
+  padding: 5px;
+  border-bottom: 2px solid #EBEBEB;
+}
+
+footer,
+main {
+  padding: 25px;
 }
 
 h1 {
   font-weight: bold;
-  color: pink;
+  color: #F56C1A;
+  text-align: center;
+}
+
+h2 {
+  font-weight: normal;
 }
 
 .bold {
@@ -71,8 +94,7 @@ li {
 
 footer {
   margin-top: 50px;
-  padding-top: 25px;
-  border-top: 1px solid lightgrey;
+  border-top: 1px solid #EBEBEB;
 }
 
 footer > a {
@@ -87,3 +109,20 @@ footer > a {
   display: none !important;
 }
 
+.todays-place {
+  color: #263F49;
+}
+
+.split-screen {
+  display: flex;
+  flex-direction: row;
+}
+
+.split-screen > * {
+  justify-content: center;
+  width: 50%;
+}
+
+.error-msg {
+  color: red;
+}
