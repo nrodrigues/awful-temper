@@ -73,8 +73,7 @@ function rejectTodaysPlace() {
           .then(pickNext);
   
   function pickNext(available) {
-    const placeIndex = Math.floor(Math.random() * available.length);
-    return redis.set(TODAYS_PLACE_KEY, available[placeIndex]);
+    return redis.set(TODAYS_PLACE_KEY, getRandomFromList(available));
   }
 }
 
@@ -89,7 +88,7 @@ function initTodaysPlace() {
 }
 
 function getRandom() {
-  return redis.srandmember(PLACES_LIST_KEY);
+  return getAll().then(getRandomFromList);
 }
 
 function getAll() {
@@ -97,9 +96,16 @@ function getAll() {
 }
 
 function add(place) {
+  console.log('Adding "' + place + '"');
   return redis.sadd(PLACES_LIST_KEY, place);
 }
 
 function remove(place) {
+  console.log('Removing "' + place + '"');
   return redis.srem(PLACES_LIST_KEY, place);
+}
+
+
+function getRandomFromList(places) {
+  return places[Math.floor(Math.random() * places.length)];
 }

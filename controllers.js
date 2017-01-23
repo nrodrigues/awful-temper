@@ -26,7 +26,6 @@ function addPlace(request, response, next) {
     response.sendStatus(400);
     return;
   }
-  console.log('request: ', request.body);
   
   lunchPlaces.add(request.body.place)
     .then(() => response.sendStatus(200))

@@ -32,10 +32,11 @@
           Today's Lunch Will Be In:
           <strong class="todays-place">{{ todaysPlaceData.todaysPlace }}</strong>.
         </h2>
+        <!-- <span>Valid for {{todaysPlaceData.ttl / 60 / 60 | number:0}} hours</span> -->
         <div ng-if="todaysPlaceData.voters.length">
           {{votersMessage()}} don't like this idea!
         </div>
-        <div>
+        <div ng-if="!isReadOnly()">
           <a href="" ng-click="voteDown.visible = !voteDown.visible">don't like it?</a>
           <div ng-if="voteDown.visible">Reject votes only available throw slack on slack! Type "/london-lunch reject"</div>
           <!-- <form ng-if="voteDown.visible"
@@ -48,10 +49,10 @@
           </form> -->
         </div>
         
-        <form name="placesForm" ng-submit="addLunchPlace()">
+        <form name="placesForm" ng-submit="addLunchPlace()" ng-if="!isReadOnly()">
           <p>Add a new lunch place:</p>
           
-          <input type="text" maxlength="100" placeholder="Some fancy restaurant!" ng-model="newPlace">
+          <input type="text" maxlength="100" placeholder="Some fancy restaurant!" ng-model="model.newPlace">
           <button type="submit">Submit</button>
         </form>
         <div class="split-screen">
@@ -59,7 +60,7 @@
             <p>Available places:</p>
             <ul>
               <li ng-repeat="place in lunchPlaces">
-                {{ place }} - <button ng-click="deleteLunchPlace(place)">Remove</button>
+                {{ place }}<span ng-if="!isReadOnly()"> - <button ng-click="deleteLunchPlace(place)">Remove</button></span>
               </li>
             </ul>
           </section>
@@ -74,8 +75,12 @@
         </div>
       </main>
   
-      <footer>
-        <a href="https://gomix.com/#!/project/awful-temper">Edit this app</a>.
+      <footer>        
+        <div ng-switch="isReadOnly()">
+          <button ng-switch-when="true" ng-click="unlock()">UNLOCK</button>
+          <button ng-switch-when="false" ng-click="lock()">LOCK</button>
+        </div>
+        <span><a href="https://gomix.com/#!/project/awful-temper">Edit this app</a>.</span>
       </footer>
     </div>
 

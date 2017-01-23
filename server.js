@@ -9,6 +9,7 @@ const app = express();
 
 const controllers = require('./controllers');
 const slack = require('./slack');
+const auth = require('./auth');
 const BadRequestError = require('./bad-request-error');
 
 // we've started you off with Express, 
@@ -24,18 +25,25 @@ app.get("/", controllers.getPage);
 app.get("/lunch-places", controllers.getPlaces);
 app.get('/lunch-places/random', controllers.getRandomPlace);
 
-app.post("/lunch-places", bodyParser.json(), controllers.addPlace);
-app.delete("/lunch-places/:place", controllers.deletePlace);
+app.post("/lunch-places", auth, bodyParser.json(), controllers.addPlace);
+app.delete("/lunch-places/:place", auth, controllers.deletePlace);
 
 app.get('/lunch-places/todays', controllers.getTodaysPlace);
 // app.post('/lunch-places/todays/votedown', bodyParser.json(), controllers.voteDown);
 app.get('/lunch-places/todays/reset', controllers.resetTodaysPlace);
+
+app.post('/auth', bodyParser.json(), auth.authenticate);
 
 // slack
 app.post('/slack/lunch-places/todays', formidable(), slack.getTodaysPlace);
 
 // Error handling
 app.use((error, request, response, next) => {
+  if (error.name ==='UnauthorizedError') {
+    response.sendStatus(401);
+    return;
+  }
+  
   if (error.name === 'BadRequestError') {
     response.status(400).send({ message: error.message });
     return;

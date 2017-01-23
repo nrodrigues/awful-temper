@@ -41,13 +41,13 @@ function getTodaysPlace() {
 }
 
 function formatTodaysPlace(place) {
-  const message = `GET YOUR ASSES TO *${place.todaysPlace}* NOW!!!!!!!!!!!!!!!!!!!\n`;
-  const votes = place.voters.length ? `*${getVotersMsgFormat(place.voters)} don't like this idea!*\n` : '';
+  const message = `<!here|here> Today's lunch will be in *${place.todaysPlace}*\n`;
+  const votes = place.voters.length ? `${getVotersMsgFormat(place.voters)} ${pluralDont(place.voters)} like this idea!\n` : '';
   const rejected = place.rejected.length ? `${getRejectedMsgFormat(place.rejected)} already rejected for today\n` : '';
   const link = 'https://awful-temper.gomix.me/';
 
   return {
-    // response_type: 'in_channel',
+    response_type: 'in_channel',
     text: `${message}${votes}${rejected}${link}`,
   };
 }
@@ -60,6 +60,10 @@ function getVotersMsgFormat(voters) {
   return toItemsList(voters.map(u => `@${u}`));
 }
 
+function pluralDont(voters) {
+  return voters.length > 1 ? `don't` : `doesn't`;
+}
+
 function toItemsList(list) {
     const len = list.length;
     if (len === 1) {
@@ -69,4 +73,4 @@ function toItemsList(list) {
     const firsts =  list.slice(0, len - 1);
     const last = list[len -1];
     return [firsts.join(', '), last].join(' and ');
-  }
+}

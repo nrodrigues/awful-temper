@@ -93,11 +93,14 @@ li {
 }
 
 footer {
+  display: flex;
+  justify-content: space-between;
   margin-top: 50px;
   border-top: 1px solid #EBEBEB;
 }
 
 footer > a {
+  
   color: #BBBBBB;
 }
 
