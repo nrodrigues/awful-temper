@@ -8,8 +8,8 @@
 <!-- hbs(handlebars): http://handlebarsjs.com/expressions.html -->
 
 <!DOCTYPE html>
-<html ng-app='random-lunch-places' ng-cloak
-      ng-controller='placesCtrl'>
+<html ng-app="random-lunch-places" ng-cloak
+      ng-controller="placesCtrl">
   <head>
     <title>LUNCH PLACE RANDOMIZER</title>
     <meta name="description" content="A cool thing made with Gomix">
@@ -32,7 +32,7 @@
           Today's Lunch Will Be In:
           <strong class="todays-place">{{ todaysPlaceData.todaysPlace }}</strong>.
         </h2>
-        <!-- <span>Valid for {{todaysPlaceData.ttl / 60 / 60 | number:0}} hours</span> -->
+        <span>Valid for {{todaysPlaceData.ttl / 60 / 60 | number:0}} hours</span>
         <div ng-if="todaysPlaceData.voters.length">
           {{votersMessage()}} don't like this idea!
         </div>
